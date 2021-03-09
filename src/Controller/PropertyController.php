@@ -41,6 +41,13 @@ class PropertyController extends AbstractController
     public function show ($slug, $id): Response
     {
         $property = $this->propertyRepository->find($id);
+
+        if ($property->getSlug() !== $slug ){
+            return $this->redirectToRoute('property.show', [
+                'id' => $property->getId(),
+                'slug' => $property->getSlug()
+            ], 302);
+        }
         
         return $this->render('property/show.html.twig', [
             'property' => $property,
