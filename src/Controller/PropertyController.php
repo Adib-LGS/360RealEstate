@@ -3,7 +3,7 @@ namespace App\Controller;
 
 use App\Entity\Property;
 use App\Repository\PropertyRepository;
-use Doctrine\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,9 +16,9 @@ class PropertyController extends AbstractController
      */
     private $propertyRepository;
 
-    public function __construct(PropertyRepository $propertyRepository, ObjectManager $om) {
+    public function __construct(PropertyRepository $propertyRepository) {
         $this->propertyRepository = $propertyRepository;
-        $this->om = $om;
+        
     }
 
     /**
@@ -27,12 +27,24 @@ class PropertyController extends AbstractController
      */
     public function index(PropertyRepository $propertyRepository): Response
     {
-
-        $property = $this->propertyRepository->findAllUnsoldedHome();
-        dump($property);
-        $this->om->flush();
+        /**dump($property);
+        $this->om->flush();**/
         return $this->render('property/index.html.twig', [
             'current_menu' => 'properties' 
         ]);
     }   
+
+    /**
+     * @Route("/biens/{slug}-{id}", name="property.show", requirements={"slug": "[a-z0-9\-]*"})
+     * @return Response
+     */
+    public function show ($slug, $id): Response
+    {
+        $property = $this->propertyRepository->find($id);
+        
+        return $this->render('property/show.html.twig', [
+            'property' => $property,
+            'current_menu' => 'properties',
+        ]);
+    }
 }

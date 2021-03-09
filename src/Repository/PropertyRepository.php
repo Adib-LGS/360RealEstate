@@ -18,11 +18,28 @@ class PropertyRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Property::class);
     }
+    
 
-    public function findAllUnsoldedHome()
+    protected function findRightQuery()
     {
         return $this->createQueryBuilder('p')
-            ->where('p.sold = false')
+            ->where('p.sold = false');
+    }
+
+    
+    public function findAllUnsoldedHome()
+    {
+        return $this->findRightQuery()
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    
+    public function findLatest()
+    {
+        return $this->findRightQuery()
+            ->setMaxResults(6)
             ->getQuery()
             ->getResult()
         ;
