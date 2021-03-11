@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
-{% block title 'Éditer les biens' %}
+{% block title 'Ajouter un bien' %}
 
 {% block body %}
     <div class="container mt-4">
-        <h1>Éditer les biens</h1>
+        <h1>Ajouter un bien</h1>
             {{ form_start(form) }}
             <div class="row">
                 <div class="col-md-4">{{ form_row(form.title) }}</div>
@@ -23,7 +23,7 @@
                     <div class="col-md-22">{{ form_row(form.sold) }}</div>
             </div>
                 {{ form_widget(form) }}
-            <button class="btn btn-primary">Éditer</button>
+            <button class="btn btn-primary">Ajouter</button>
             {{ form_end(form) }}
     </div>
 {% endblock %}

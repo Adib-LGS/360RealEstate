@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Property;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,12 +20,13 @@ class PropertyType extends AbstractType
             ->add('bedrooms')
             ->add('floor')
             ->add('price')
-            ->add('heat')
+            ->add('heat', ChoiceType::class, [
+                'choices' => $this->getChoices()
+            ])
             ->add('city')
             ->add('adress')
             ->add('postal_code')
             ->add('sold')
-            ->add('created_at')
         ;
     }
 
@@ -33,5 +35,19 @@ class PropertyType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Property::class,
         ]);
+    }
+
+    
+    /**Reverse HEAT array Key Value now it's Value then Key */
+    protected function getChoices()
+    {
+        $choices = Property::HEAT;
+        $output = [];
+
+        foreach($choices as $k => $v){
+            $output[$v] = $k;
+        }
+
+        return $output;
     }
 }
