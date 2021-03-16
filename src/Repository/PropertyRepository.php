@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Property;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,19 +20,20 @@ class PropertyRepository extends ServiceEntityRepository
         parent::__construct($registry, Property::class);
     }
     
-
+    
     protected function findRightQuery()
     {
         return $this->createQueryBuilder('p')
             ->where('p.sold = false');
     }
 
-    
-    public function findAllUnsoldedHome()
+    /**
+     * @return Query
+     */
+    public function findAllUnsoldedHome(): Query
     {
         return $this->findRightQuery()
-            ->getQuery()
-            ->getResult()
+            ->getQuery();
         ;
     }
 
@@ -45,22 +47,6 @@ class PropertyRepository extends ServiceEntityRepository
         ;
     }
 
-    // /**
-    //  * @return Property[] Returns an array of Property objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
     /*
     public function findOneBySomeField($value): ?Property
