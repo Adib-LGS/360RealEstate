@@ -1,0 +1,16 @@
+liip_imagine:
+    filter_sets:
+        my_thumb :
+            # adjust the image quality to 75%
+            quality: 75
+            filters:
+                thumbnail:
+                    size: [360, 230]
+                    mode : outbound
+        my_medium :
+            # adjust the image quality to 75%
+            quality: 75
+            filters:
+                thumbnail:
+                    size: [800, 530]
+                    mode : outbound
